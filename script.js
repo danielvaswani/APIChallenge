@@ -1,31 +1,15 @@
 let people = [];
 
-people.push(fetch("https://randomuser.me/api/"));
+fetch("https://randomuser.me/api/?results=5")
+  .then((response) => response.json())
+  .then((data) => {
+    people.push(data.results);
+  });
 
 console.log(people);
 
-async function getPeople() {
-  let url = async function getUsers() {
-    let url = "https://randomuser.me/api/";
-    try {
-      let res = await fetch(url);
-      return await res.json();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  try {
-    let res = await fetch(url);
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-  }
-}
+const myElement = document.getElementById("people");
 
-async function renderUsers() {
-  let users = await getUsers();
-  let section = document.querySelector("#people");
-  console.log(section);
+for (let i = 1; i < myElement.children.length; i++) {
+  myElement.children[i].children[0].innerHTML = people[i - 1].name.first;
 }
-
-renderUsers();
